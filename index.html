@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <!-- Устанавливаем кодировку и настройки для корректного отображения на всех устройствах -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Подключаем иконки сайта для разных форматов и устройств -->
+    <link rel="icon" type="image/png" href="favicon/favicon-48x48.png" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+
+    <!-- Предварительная загрузка шрифтов для ускорения их отображения -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Подключение шрифта Montserrat с Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Подключение стилей для слайдера Slick -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+
+    <!-- Подключение пользовательского стиля -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>ХимЛаб | самый полезный экскурс по химическим связям</title>
+</head>
+
+<body>
+    <!-- Навигационная панель -->
+    <header id="navbar" class="header">
+        <div class="container">
+            <div class="header-body flex flex-jb flex-ac">
+                <!-- Логотип сайта с ссылкой на главную страницу -->
+                <a href="index.html" class="header-logo">ХимЛаб</a>
+
+                <!-- Кнопка для открытия мобильного бургер-меню -->
+                <div class="header-burger">
+                    <span></span>
+                </div>
+
+                <!-- Основное меню навигации -->
+                <nav class="header-menu">
+                    <ul class="header-list flex link-effect">
+                        <li><a class="header-link" href="gallery.html">Связи</a></li>
+                        <li><a class="header-link" href="adress.html">Модели</a></li>
+                        <li><a class="header-link" href="aboutus.html">Тесты</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент страницы -->
+    <main class="container">
+        <!-- Секция с приветствием и основной информацией -->
+        <section class="main-banner flex flex-ac">
+            <!-- Контейнер с фоновыми изображениями молекул -->
+            <div class="molecule-container">
+                <img class="molecule1" src="img/molecule1.svg" alt="">
+                <img class="molecule2" src="img/molecule2.svg" alt="">
+                <img class="molecule3" src="img/molecule3.svg" alt="">
+                <img class="molecule4" src="img/molecule4.svg" alt="">
+            </div>
+
+            <!-- Основной текст с кнопкой -->
+            <div class="chemistry">
+                <div class="chemistry-container flex flex-d-col">
+                    <h1 class="chemistry-title">
+                        Химия
+                    </h1>
+                    <p class="chemistry-slogan">
+                        наука о веществе
+                    </p>
+                    <button class="openFigure" data-id="aboutChemistry">
+                        узнать больше <span class="btnarrow">▶▶</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Модальное окно с информацией о химии -->
+            <div class="modal-wrapper" id="aboutChemistry">
+                <div class="modalWindow">
+                    <a id="close" data-close="0" class="close">&#10006;</a>
+                    Химия — это наука о веществах, их свойствах, превращениях и явлениях, которые сопровождают эти
+                    превращения.
+                    <!-- Дополнительный текст о химии -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Вторая секция с вопросом и ответом -->
+        <section class="banner-question flex flex-ac flex-wr">
+            <!-- Контейнер с изображением бутылки -->
+            <div class="botle-block-wrapper">
+                <div class="botle-block-container">
+                    <div class="backblock"></div>
+                    <img class="waves" src="img/waves.svg" alt="">
+                    <img class="botle" src="img/botle.png" alt="">
+                </div>
+            </div>
+
+            <!-- Текстовый блок с вопросом и кнопкой для раскрытия ответа -->
+            <div class="question">
+                <p>Какая сила удерживает вместе атомы в молекуле вещества и почему они не разбегаются в разные стороны?
+                </p>
+                <button class="openFigure" data-id="answerQuestion">
+                    узнать ответ <span class="btnarrow">▶▶</span>
+                </button>
+            </div>
+
+            <!-- Модальное окно с ответом на вопрос -->
+            <div class="modal-wrapper" id="answerQuestion">
+                <div class="modalWindow">
+                    <a id="close" data-close="0" class="close">&#10006;</a>
+                    Химическая связь удерживает вместе атомы в молекуле вещества и не позволяет им разбегаться в разные
+                    стороны.
+                </div>
+            </div>
+            <img style="z-index: -10; opacity: 0.5;" class="molecule2" src="img/molecule1.svg" alt="">
+        </section>
+
+        <!-- Третья секция с 3D моделями молекул и слайдером -->
+        <section>
+            <section>
+                <div class="slider">
+                    <div class="molecule-slide" id="molecule1-container">
+                        <div class="molecule-view"></div>
+                        <div class="molecule-info">
+                            <h2>Вода (H₂O)</h2>
+                            <p>Молекула воды состоит из одного атома кислорода и двух атомов водорода. Связи между
+                                атомами
+                                водорода и кислорода являются ковалентными.</p>
+                        </div>
+                    </div>
+                    <div class="molecule-slide" id="molecule2-container">
+                        <div class="molecule-view"></div>
+                        <div class="molecule-info">
+                            <h2>Метан (CH₄)</h2>
+                            <p>Метан — это простой углеводород, состоящий из одного атома углерода и четырёх атомов
+                                водорода, соединённых ковалентными связями.</p>
+                        </div>
+                    </div>
+                    <div class="molecule-slide" id="molecule3-container">
+                        <div class="molecule-view"></div>
+                        <div class="molecule-info">
+                            <h2>Этилен (C₂H₄)</h2>
+                            <p>Этилен — это углеводород с двумя углеродами, связанными двойной связью, и четырьмя
+                                атомами
+                                водорода.</p>
+                        </div>
+                    </div>
+                    <div class="molecule-slide" id="molecule4-container">
+                        <div class="molecule-view"></div>
+                        <div class="molecule-info">
+                            <h2>Ацетилен (C₂H₂)</h2>
+                            <p>Ацетилен — это углеводород, в котором два атома углерода связаны тройной связью, а также
+                                с
+                                двумя атомами водорода.</p>
+                        </div>
+                    </div>
+                    <div class="molecule-slide" id="molecule5-container">
+                        <div class="molecule-view"></div>
+                        <div class="molecule-info">
+                            <h2>Бензол (C₆H₆)</h2>
+                            <p>Бензол — это ароматический углеводород, состоящий из шести углеродных атомов, образующих
+                                кольцо, с водородами, связанными к каждому углероду.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Секция с тестом на химические связи -->
+            <section>
+                <div id="test-container" class="test-container">
+                    <!-- Кнопка для начала теста -->
+                    <button id="start-test-btn" class="start-btn">Пройти тест по химическим связям <span
+                            class="btnarrow">▶▶</span></button>
+                    <!-- Контейнер с вопросами теста -->
+                    <div id="quiz" class="quiz" style="display: none;">
+                        <div id="question-container">
+                            <h2 id="question"></h2>
+                            <div id="answers"></div>
+                        </div>
+                        <!-- Кнопка для перехода к следующему вопросу -->
+                        <button id="next-btn" class="next-btn" style="display: none;">Следующий вопрос <span
+                                class="btnarrow">▶▶</span></button>
+                    </div>
+                    <!-- Контейнер с результатом теста -->
+                    <div id="result" class="result" style="display: none;">
+                        <h2>Ваш результат: <span id="score"></span>/100</h2>
+                        <button onclick="location.reload()">Пройти тест снова</button>
+                    </div>
+                </div>
+            </section>
+    </main>
+
+    <!-- Футер с контактами и информацией об авторе -->
+    <footer>
+        <section class="container flex flex-jb">
+            <div class="flex flex-d-col">
+                <h1>Контакты</h1>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                </ul>
+            </div>
+            <div class="flex flex-d-col">
+                <h1>Соц. сети</h1>
+            </div>
+            <div class="flex flex-d-col">
+                <h1>Автор</h1>
+            </div>
+            <div class="flex flex-d-col">
+                <h1></h1>
+            </div>
+        </section>
+    </footer>
+
+    <!-- Подключение библиотек для работы с 3D моделями и управления -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- Подключение библиотеки jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Подключение библиотеки для слайдера Slick -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    <!-- Подключение пользовательских скриптов -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
