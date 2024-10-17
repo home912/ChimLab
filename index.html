@@ -80,15 +80,6 @@
                 </div>
             </div>
 
-            <!-- Модальное окно с информацией о химии -->
-            <div class="modal-wrapper" id="aboutChemistry">
-                <div class="modalWindow">
-                    <a id="close" data-close="0" class="close">&#10006;</a>
-                    Химия — это наука о веществах, их свойствах, превращениях и явлениях, которые сопровождают эти
-                    превращения.
-                    <!-- Дополнительный текст о химии -->
-                </div>
-            </div>
         </section>
 
         <!-- Вторая секция с вопросом и ответом -->
@@ -109,16 +100,28 @@
                 <button class="openFigure" data-id="answerQuestion">
                     узнать ответ <span class="btnarrow">▶▶</span>
                 </button>
-            </div>
+                <!-- Модальные окна -->
+                <div class="modal-wrapper" style="display: none;" id="aboutChemistry">
+                    <div class="modalWindow">
+                        <a class="close">&#10006;</a>
+                        <p>Хи́мия — одна из важнейших и обширных областей естествознания, наука, изучающая вещества,
+                            также их состав и строение, их свойства, зависящие от состава и строения, их превращения,
+                            ведущие к изменению состава — химические реакции, а также законы и закономерности, которым
+                            эти превращения подчиняются.</p>
+                    </div>
+                </div>
 
-            <!-- Модальное окно с ответом на вопрос -->
-            <div class="modal-wrapper" id="answerQuestion">
-                <div class="modalWindow">
-                    <a id="close" data-close="0" class="close">&#10006;</a>
-                    Химическая связь удерживает вместе атомы в молекуле вещества и не позволяет им разбегаться в разные
-                    стороны.
+                <div class="modal-wrapper" style="display: none;" id="answerQuestion">
+                    <div class="modalWindow">
+                        <a class="close">&#10006;</a>
+                        <p>Эта сила называется <strong>химической связью</strong>, школьники узнают о ней в 8 классе.
+                            Еще Ньютон
+                            предположил, что она имеет электростатическую природу, но подробнее в этом разобрались лишь
+                            в начале ХХ века.</p>
+                    </div>
                 </div>
             </div>
+
             <img style="z-index: -10; opacity: 0.5;" class="molecule2" src="img/molecule1.svg" alt="">
         </section>
 
@@ -194,6 +197,7 @@
                         <button onclick="location.reload()">Пройти тест снова</button>
                     </div>
                 </div>
+
             </section>
     </main>
 

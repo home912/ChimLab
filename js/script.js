@@ -46,6 +46,47 @@ $(document).ready(function () {
 });
 
 
+// Функция для открытия модального окна
+function openModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = 'block';
+    document.body.classList.add('no-scroll'); // Блокировка прокрутки
+  }
+}
+
+// Функция для закрытия модального окна
+function closeModal(modal) {
+  modal.style.display = 'none';
+  document.body.classList.remove('no-scroll'); // Разрешение прокрутки
+}
+
+// Добавление обработчиков событий для кнопок и закрытия
+document.querySelectorAll('.openFigure').forEach(button => {
+  button.addEventListener('click', () => {
+    const modalId = button.getAttribute('data-id');
+    openModal(modalId);
+  });
+});
+
+document.querySelectorAll('.modal-wrapper').forEach(modal => {
+  // Закрытие при клике на крестик
+  modal.querySelector('.close').addEventListener('click', () => {
+    closeModal(modal);
+  });
+
+  // Закрытие при клике вне модального окна
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      closeModal(modal);
+    }
+  });
+});
+
+
+
+
+
 
 
 function createMoleculeScene(containerId, moleculeCreator) {
@@ -181,25 +222,25 @@ function createBenzeneMolecule(scene) {
 
   // Создаем углероды в форме шестиугольника
   for (let i = 0; i < 6; i++) {
-      const angle = i * angleOffset;
-      const carbon = createAtomWithOutline(
-          new THREE.Vector3(Math.cos(angle) * bondLength, Math.sin(angle) * bondLength, 0),
-          0x000000, 0xffffff, carbonSize, scene // Уменьшен размер углерода
-      );
-      carbons.push(carbon);
+    const angle = i * angleOffset;
+    const carbon = createAtomWithOutline(
+      new THREE.Vector3(Math.cos(angle) * bondLength, Math.sin(angle) * bondLength, 0),
+      0x000000, 0xffffff, carbonSize, scene // Уменьшен размер углерода
+    );
+    carbons.push(carbon);
   }
 
   // Создаем связи между углеродами
   for (let i = 0; i < 6; i++) {
-      createBond(carbons[i], carbons[(i + 1) % 6], 0.1, scene); // Связи между углеродами
+    createBond(carbons[i], carbons[(i + 1) % 6], 0.1, scene); // Связи между углеродами
   }
 
 
   // Создаем водороды на внешней стороне молекулы
   for (let i = 0; i < 6; i++) {
-      const angle = i * angleOffset;
-      const hydrogenPosition = new THREE.Vector3(Math.cos(angle) * (bondLength + 0.4), Math.sin(angle) * (bondLength + 0.4), 0);
-      createAtomWithOutline(hydrogenPosition, 0xffffff, 0x000000, hydrogenSize, scene); // Уменьшен размер водородов
+    const angle = i * angleOffset;
+    const hydrogenPosition = new THREE.Vector3(Math.cos(angle) * (bondLength + 0.4), Math.sin(angle) * (bondLength + 0.4), 0);
+    createAtomWithOutline(hydrogenPosition, 0xffffff, 0x000000, hydrogenSize, scene); // Уменьшен размер водородов
   }
 }
 
@@ -256,16 +297,16 @@ document.getElementById("start-test-btn").addEventListener("click", function () 
 document.getElementById("next-btn").addEventListener("click", function () {
   const selectedAnswer = document.querySelector('input[name="answer"]:checked');
   if (selectedAnswer) {
-      const answerIndex = parseInt(selectedAnswer.value);
-      if (answerIndex === questions[currentQuestionIndex].correct) {
-          score += 100 / questions.length;
-      }
-      currentQuestionIndex++;
-      if (currentQuestionIndex < questions.length) {
-          showQuestion();
-      } else {
-          showResult();
-      }
+    const answerIndex = parseInt(selectedAnswer.value);
+    if (answerIndex === questions[currentQuestionIndex].correct) {
+      score += 100 / questions.length;
+    }
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+      showQuestion();
+    } else {
+      showResult();
+    }
   }
 });
 
@@ -278,13 +319,13 @@ function showQuestion() {
   answersContainer.innerHTML = '';
 
   questions[currentQuestionIndex].answers.forEach((answer, index) => {
-      const answerLabel = document.createElement('label');
-      answerLabel.innerHTML = `
+    const answerLabel = document.createElement('label');
+    answerLabel.innerHTML = `
           <input type="radio" name="answer" value="${index}">
           ${answer}
       `;
-      answersContainer.appendChild(answerLabel);
-      answersContainer.appendChild(document.createElement('br'));
+    answersContainer.appendChild(answerLabel);
+    answersContainer.appendChild(document.createElement('br'));
   });
 
   nextBtn.style.display = "block";
