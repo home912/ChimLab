@@ -121,104 +121,104 @@
                     </div>
                 </div>
             </div>
-
-            <img style="z-index: -10; opacity: 0.5;" class="molecule2" src="img/molecule1.svg" alt="">
+            <img style="z-index: -10; opacity: 0.5;" class="molecule2" src="img/molecule4.svg" alt="">
         </section>
 
         <!-- Третья секция с 3D моделями молекул и слайдером -->
+        <section class="models3d">
+            <div class="slider">
+                <div class="molecule-slide" id="molecule1-container">
+                    <div class="molecule-view"></div>
+                    <div class="molecule-info">
+                        <h1>Вода (H₂O)</h1>
+                        <p>Молекула воды состоит из одного атома кислорода и двух атомов водорода. Связи между
+                            атомами
+                            водорода и кислорода являются ковалентными.</p>
+                    </div>
+                </div>
+                <div class="molecule-slide" id="molecule2-container">
+                    <div class="molecule-view"></div>
+                    <div class="molecule-info">
+                        <h1>Метан (CH₄)</h1>
+                        <p>Метан — это простой углеводород, состоящий из одного атома углерода и четырёх атомов
+                            водорода, соединённых ковалентными связями.</p>
+                    </div>
+                </div>
+                <div class="molecule-slide" id="molecule3-container">
+                    <div class="molecule-view"></div>
+                    <div class="molecule-info">
+                        <h1>Этилен (C₂H₄)</h1>
+                        <p>Этилен — это углеводород с двумя углеродами, связанными двойной связью, и четырьмя
+                            атомами
+                            водорода.</p>
+                    </div>
+                </div>
+                <div class="molecule-slide" id="molecule4-container">
+                    <div class="molecule-view"></div>
+                    <div class="molecule-info">
+                        <h1>Ацетилен (C₂H₂)</h1>
+                        <p>Ацетилен — это углеводород, в котором два атома углерода связаны тройной связью, а также
+                            с
+                            двумя атомами водорода.</p>
+                    </div>
+                </div>
+                <div class="molecule-slide" id="molecule5-container">
+                    <div class="molecule-view"></div>
+                    <div class="molecule-info">
+                        <h1>Бензол (C₆H₆)</h1>
+                        <p>Бензол — это ароматический углеводород, состоящий из шести углеродных атомов, образующих
+                            кольцо, с водородами, связанными к каждому углероду.</p>
+                    </div>
+                </div>
+            </div>
+            <img style="z-index: -10; opacity: 0.5;" class="molecule5" src="img/molecule3.svg" alt="">
+        </section>
+
+        <!-- Секция с тестом на химические связи -->
         <section>
-            <section>
-                <div class="slider">
-                    <div class="molecule-slide" id="molecule1-container">
-                        <div class="molecule-view"></div>
-                        <div class="molecule-info">
-                            <h2>Вода (H₂O)</h2>
-                            <p>Молекула воды состоит из одного атома кислорода и двух атомов водорода. Связи между
-                                атомами
-                                водорода и кислорода являются ковалентными.</p>
-                        </div>
+            <div id="test-container" class="test-container">
+                <h1 class="test-title">ТЕСТ: Химические связи</h1>
+                <!-- Кнопка для начала теста -->
+                <button id="start-test-btn" class="start-btn">Пройти тест по химическим связям <span
+                        class="btnarrow">▶▶</span></button>
+                <!-- Контейнер с вопросами теста -->
+                <div id="quiz" class="quiz" style="display: none;">
+                    <div id="question-container">
+                        <h2 id="question"></h2>
+                        <div id="answers"></div>
                     </div>
-                    <div class="molecule-slide" id="molecule2-container">
-                        <div class="molecule-view"></div>
-                        <div class="molecule-info">
-                            <h2>Метан (CH₄)</h2>
-                            <p>Метан — это простой углеводород, состоящий из одного атома углерода и четырёх атомов
-                                водорода, соединённых ковалентными связями.</p>
-                        </div>
-                    </div>
-                    <div class="molecule-slide" id="molecule3-container">
-                        <div class="molecule-view"></div>
-                        <div class="molecule-info">
-                            <h2>Этилен (C₂H₄)</h2>
-                            <p>Этилен — это углеводород с двумя углеродами, связанными двойной связью, и четырьмя
-                                атомами
-                                водорода.</p>
-                        </div>
-                    </div>
-                    <div class="molecule-slide" id="molecule4-container">
-                        <div class="molecule-view"></div>
-                        <div class="molecule-info">
-                            <h2>Ацетилен (C₂H₂)</h2>
-                            <p>Ацетилен — это углеводород, в котором два атома углерода связаны тройной связью, а также
-                                с
-                                двумя атомами водорода.</p>
-                        </div>
-                    </div>
-                    <div class="molecule-slide" id="molecule5-container">
-                        <div class="molecule-view"></div>
-                        <div class="molecule-info">
-                            <h2>Бензол (C₆H₆)</h2>
-                            <p>Бензол — это ароматический углеводород, состоящий из шести углеродных атомов, образующих
-                                кольцо, с водородами, связанными к каждому углероду.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Секция с тестом на химические связи -->
-            <section>
-                <div id="test-container" class="test-container">
-                    <!-- Кнопка для начала теста -->
-                    <button id="start-test-btn" class="start-btn">Пройти тест по химическим связям <span
+                    <!-- Кнопка для перехода к следующему вопросу -->
+                    <button id="next-btn" class="next-btn" style="display: none;">Следующий вопрос <span
                             class="btnarrow">▶▶</span></button>
-                    <!-- Контейнер с вопросами теста -->
-                    <div id="quiz" class="quiz" style="display: none;">
-                        <div id="question-container">
-                            <h2 id="question"></h2>
-                            <div id="answers"></div>
-                        </div>
-                        <!-- Кнопка для перехода к следующему вопросу -->
-                        <button id="next-btn" class="next-btn" style="display: none;">Следующий вопрос <span
-                                class="btnarrow">▶▶</span></button>
-                    </div>
-                    <!-- Контейнер с результатом теста -->
-                    <div id="result" class="result" style="display: none;">
-                        <h2>Ваш результат: <span id="score"></span>/100</h2>
-                        <button onclick="location.reload()">Пройти тест снова</button>
-                    </div>
+                </div>
+                <!-- Контейнер с результатом теста -->
+                <div id="result" class="result" style="display: none;">
+                    <h2>Ваш результат: <span id="score"></span>/100</h2>
+                    <button onclick="location.reload()">Пройти тест снова</button>
                 </div>
 
-            </section>
+            </div>
+        </section>
     </main>
 
     <!-- Футер с контактами и информацией об авторе -->
     <footer>
         <section class="container flex flex-jb">
             <div class="flex flex-d-col">
-                <h1>Контакты</h1>
+                <h2>Контакты</h2>
                 <ul>
                     <li>1</li>
                     <li>2</li>
                 </ul>
             </div>
             <div class="flex flex-d-col">
-                <h1>Соц. сети</h1>
+                <h2>Соц. сети</h2>
             </div>
             <div class="flex flex-d-col">
-                <h1>Автор</h1>
+                <h2>Автор</h2>
             </div>
             <div class="flex flex-d-col">
-                <h1></h1>
+                <h2></h2>
             </div>
         </section>
     </footer>
