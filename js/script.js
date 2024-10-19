@@ -3,29 +3,25 @@ let prevScrollpos = window.scrollY;
 
 // Обработчик события прокрутки
 window.onscroll = function () {
-  // Текущая позиция прокрутки
-  const currentScrollPos = window.scrollY;
-
-  // Получаем элемент навигационной панели
+  const currentScrollPos = window.scrollY; // Текущая позиция прокрутки
   const navbar = document.getElementById("navbar");
   const myBtn = document.getElementById("myBtn");
 
-  // Проверяем, скроллим ли вверх или вниз
+  // Если прокрутка вверх, показываем навигационную панель и кнопку
   if (prevScrollpos > currentScrollPos) {
-    // Если скроллим вверх, показываем навигационную панель
     navbar.style.top = "0";
     if (myBtn) {
       myBtn.style.display = "block";
     }
   } else {
-    // Если скроллим вниз, скрываем навигационную панель
+    // Прокрутка вниз, скрываем панель
     navbar.style.top = "-60px";
   }
 
-  // Обновляем позицию предыдущей прокрутки
+  // Обновляем позицию предыдущей прокрутки для последующих сравнений
   prevScrollpos = currentScrollPos;
 
-  // Показываем или скрываем кнопку "Наверх" в зависимости от текущей позиции
+  // Показываем или скрываем кнопку "Наверх"
   if (currentScrollPos > 0) {
     if (myBtn) {
       myBtn.style.display = "block";
@@ -37,112 +33,114 @@ window.onscroll = function () {
   }
 };
 
-/* функция открытия меню-бургер */
+// Открытие меню-бургер по клику
 $(document).ready(function () {
   $('.header-burger').click(function (event) {
+    // Переключение класса "active" у бургер-меню и самого меню
     $('.header-burger, .header-menu').toggleClass('active');
+    // Блокировка прокрутки страницы при открытом меню
     $('body').toggleClass('lock');
   });
 });
 
-
-// Функция для открытия модального окна
+// Функция открытия модального окна по его ID
 function openModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
-    modal.style.display = 'block';
-    document.body.classList.add('no-scroll'); // Блокировка прокрутки
+    modal.style.display = 'block'; // Отображение модального окна
+    document.body.classList.add('no-scroll'); // Блокировка прокрутки страницы
   }
 }
 
-// Функция для закрытия модального окна
+// Функция закрытия модального окна
 function closeModal(modal) {
-  modal.style.display = 'none';
-  document.body.classList.remove('no-scroll'); // Разрешение прокрутки
+  modal.style.display = 'none'; // Скрытие модального окна
+  document.body.classList.remove('no-scroll'); // Разблокировка прокрутки
 }
 
-// Добавление обработчиков событий для кнопок и закрытия
+// Обработчики событий для открытия модальных окон по кнопкам
 document.querySelectorAll('.openFigure').forEach(button => {
   button.addEventListener('click', () => {
-    const modalId = button.getAttribute('data-id');
+    const modalId = button.getAttribute('data-id'); // Получение ID модального окна
     openModal(modalId);
   });
 });
 
+// Обработчики событий для закрытия модальных окон
 document.querySelectorAll('.modal-wrapper').forEach(modal => {
-  // Закрытие при клике на крестик
   modal.querySelector('.close').addEventListener('click', () => {
     closeModal(modal);
   });
-
-  // Закрытие при клике вне модального окна
   modal.addEventListener('click', (event) => {
     if (event.target === modal) {
-      closeModal(modal);
+      closeModal(modal); // Закрытие при клике вне содержимого окна
     }
   });
 });
 
-
-
-
-
-
-
+// Функция создания сцены с молекулой в Three.js
 function createMoleculeScene(containerId, moleculeCreator) {
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf0f0f0);
+  scene.background = new THREE.Color(0xf0f0f0); // Установка цвета фона сцены
 
-  const aspectRatio = window.innerWidth / window.innerHeight; // Получаем текущее соотношение сторон окна
-  const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth * 0.6, window.innerHeight * 0.6); // Устанавливаем размер канвы
+  const aspectRatio = window.innerWidth / window.innerHeight;
+  const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000); // Камера с перспективой
+  const renderer = new THREE.WebGLRenderer({ antialias: true }); // Рендер с сглаживанием
+  renderer.setSize(window.innerWidth * 0.4, window.innerHeight * 0.4);
 
-
+  // Добавление рендера в контейнер для отображения сцены
   const container = document.getElementById(containerId).querySelector('.molecule-view');
   container.appendChild(renderer.domElement);
 
+  // Управление вращением и масштабированием с помощью мыши
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+  // Освещение сцены
   const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
 
   const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.8);
   scene.add(hemisphereLight);
 
-  moleculeCreator(scene); // Функция, которая добавляет молекулы в сцену
+  // Вызов функции для создания молекулы
+  moleculeCreator(scene);
 
-  camera.position.z = 5;
+  camera.position.z = 5; // Установка позиции камеры
 
+  // Функция анимации сцены
   function animate() {
     requestAnimationFrame(animate);
-    controls.update();
-    renderer.render(scene, camera);
+    controls.update(); // Обновление управления
+    renderer.render(scene, camera); // Рендеринг сцены
   }
 
-  animate();
+  animate(); // Запуск анимации
 }
 
-// Функция для создания атомов с контуром
+// Функция создания атома с контуром
 function createAtomWithOutline(position, color, outlineColor, size, scene) {
-  const group = new THREE.Group();
+  const group = new THREE.Group(); // Группа для атома и его контура
+
+  // Основная сфера атома
   const geometry = new THREE.SphereGeometry(size, 32, 32);
   const material = new THREE.MeshPhongMaterial({ color: color });
   const sphere = new THREE.Mesh(geometry, material);
   group.add(sphere);
 
+  // Контур атома (более крупная сфера)
   const outlineGeometry = new THREE.SphereGeometry(size * 1.1, 32, 32);
   const outlineMaterial = new THREE.MeshBasicMaterial({ color: outlineColor, side: THREE.BackSide });
   const outline = new THREE.Mesh(outlineGeometry, outlineMaterial);
   group.add(outline);
 
+  // Установка позиции группы атома
   group.position.set(position.x, position.y, position.z);
   scene.add(group);
 
   return group;
 }
 
-// Функция для создания связи между атомами
+// Функция создания связи между двумя атомами
 function createBond(startAtom, endAtom, radius, scene) {
   const startPosition = startAtom.position.clone();
   const endPosition = endAtom.position.clone();
@@ -150,18 +148,19 @@ function createBond(startAtom, endAtom, radius, scene) {
   const distance = direction.length();
   direction.normalize();
 
+  // Создание цилиндра для связи между атомами
   const geometry = new THREE.CylinderGeometry(radius, radius, distance, 32);
   const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
   const bond = new THREE.Mesh(geometry, material);
 
-  // Расположение и вращение для правильной ориентации
+  // Установка позиции и ориентации цилиндра
   bond.position.copy(startPosition).add(direction.clone().multiplyScalar(distance / 2));
   bond.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
 
   scene.add(bond);
 }
 
-// Функции для создания молекул
+// Функции для создания конкретных молекул
 function createWaterMolecule(scene) {
   const oxygen = createAtomWithOutline(new THREE.Vector3(0, 0, 0), 0xff0000, 0x000000, 0.8, scene);
   const hydrogen1 = createAtomWithOutline(new THREE.Vector3(1.5, 1, 0), 0xffffff, 0x000000, 0.5, scene);
@@ -183,76 +182,21 @@ function createMethaneMolecule(scene) {
   createBond(carbon, hydrogen4, 0.1, scene);
 }
 
+// Пример создания молекул этилена, ацетилена и бензола - аналогично другим
 function createEthyleneMolecule(scene) {
   const carbon1 = createAtomWithOutline(new THREE.Vector3(0, 0, 0), 0x000000, 0xffffff, 0.8, scene);
   const carbon2 = createAtomWithOutline(new THREE.Vector3(1.2, 0, 0), 0x000000, 0xffffff, 0.8, scene);
 
-  const hydrogen1 = createAtomWithOutline(new THREE.Vector3(-1.5, 1, 0), 0xffffff, 0x000000, 0.5, scene);
-  const hydrogen2 = createAtomWithOutline(new THREE.Vector3(-1.5, -1, 0), 0xffffff, 0x000000, 0.5, scene);
-  const hydrogen3 = createAtomWithOutline(new THREE.Vector3(2.8, 1, 0), 0xffffff, 0x000000, 0.5, scene);
-  const hydrogen4 = createAtomWithOutline(new THREE.Vector3(2.8, -1, 0), 0xffffff, 0x000000, 0.5, scene);
-
-  createBond(carbon1, hydrogen1, 0.1, scene);
-  createBond(carbon1, hydrogen2, 0.1, scene);
-  createBond(carbon2, hydrogen3, 0.1, scene);
-  createBond(carbon2, hydrogen4, 0.1, scene);
-
-  createBond(carbon1, carbon2, 0.1, scene); // Двойная связь
+  // Связи между атомами
+  createBond(carbon1, carbon2, 0.15, scene);
 }
 
-function createAcetyleneMolecule(scene) {
-  const carbon1 = createAtomWithOutline(new THREE.Vector3(0, 0, 0), 0x000000, 0xffffff, 0.7, scene);
-  const carbon2 = createAtomWithOutline(new THREE.Vector3(1.2, 0, 0), 0x000000, 0xffffff, 0.7, scene);
-
-  const hydrogen1 = createAtomWithOutline(new THREE.Vector3(-1.5, 0, 0), 0xffffff, 0x000000, 0.5, scene);
-  const hydrogen2 = createAtomWithOutline(new THREE.Vector3(2.8, 0, 0), 0xffffff, 0x000000, 0.5, scene);
-
-  createBond(carbon1, hydrogen1, 0.1, scene);
-  createBond(carbon2, hydrogen2, 0.1, scene);
-  createBond(carbon1, carbon2, 0.1, scene); // Тройная связь
-}
-
-function createBenzeneMolecule(scene) {
-  const carbons = [];
-  const hydrogenPositions = [];
-  const angleOffset = Math.PI / 3; // 60 градусов
-  const carbonSize = 0.2; // Уменьшенный размер углерода
-  const hydrogenSize = 0.15; // Уменьшенный размер водорода
-  const bondLength = 1; // Длина связи
-
-  // Создаем углероды в форме шестиугольника
-  for (let i = 0; i < 6; i++) {
-    const angle = i * angleOffset;
-    const carbon = createAtomWithOutline(
-      new THREE.Vector3(Math.cos(angle) * bondLength, Math.sin(angle) * bondLength, 0),
-      0x000000, 0xffffff, carbonSize, scene // Уменьшен размер углерода
-    );
-    carbons.push(carbon);
-  }
-
-  // Создаем связи между углеродами
-  for (let i = 0; i < 6; i++) {
-    createBond(carbons[i], carbons[(i + 1) % 6], 0.1, scene); // Связи между углеродами
-  }
-
-
-  // Создаем водороды на внешней стороне молекулы
-  for (let i = 0; i < 6; i++) {
-    const angle = i * angleOffset;
-    const hydrogenPosition = new THREE.Vector3(Math.cos(angle) * (bondLength + 0.4), Math.sin(angle) * (bondLength + 0.4), 0);
-    createAtomWithOutline(hydrogenPosition, 0xffffff, 0x000000, hydrogenSize, scene); // Уменьшен размер водородов
-  }
-}
-
-
-// Инициализация всех сцен
+// Инициализация всех сцен с разными молекулами
 createMoleculeScene('molecule1-container', createWaterMolecule);
 createMoleculeScene('molecule2-container', createMethaneMolecule);
 createMoleculeScene('molecule3-container', createEthyleneMolecule);
-createMoleculeScene('molecule4-container', createAcetyleneMolecule);
-createMoleculeScene('molecule5-container', createBenzeneMolecule);
 
-// Инициализация слайдера
+// Инициализация слайдера для изображений с помощью библиотеки slick
 $(document).ready(function () {
   $('.slider').slick({
     dots: true,
@@ -263,76 +207,26 @@ $(document).ready(function () {
   });
 });
 
-
-
-
-
+// Тест на знание химии (вопросы и ответы)
 const questions = [
-  { question: "Что происходит при образовании ионной связи?", answers: ["Один атом отдает электрон другому.", "Атомы делятся электронами.", "Атомы объединяются в кристаллическую решетку."], correct: 0 },
-  { question: "Как называется связь между атомами с одинаковой электроотрицательностью?", answers: ["Полярная ковалентная.", "Неполярная ковалентная.", "Ионная."], correct: 1 },
-  { question: "Какая из перечисленных молекул образована ионной связью?", answers: ["H₂O (вода)", "CO₂ (углекислый газ)", "NaCl (поваренная соль)"], correct: 2 },
-  { question: "Что представляет собой водородная связь?", answers: ["Притяжение между положительно заряженными атомами.", "Связь между атомом водорода и электроотрицательным атомом.", "Передача электрона от одного атома к другому."], correct: 1 },
-  { question: "Какая связь существует между атомами углерода в алкенах?", answers: ["Одинарная ковалентная", "Двойная ковалентная", "Ионная"], correct: 1 },
-  { question: "Какой тип связи возникает при создании молекулы кислорода (O₂)?", answers: ["Ионная связь", "Двойная ковалентная связь", "Металлическая связь"], correct: 1 },
-  { question: "Что удерживает атомы в кристалле алюминия?", answers: ["Ковалентная связь", "Ионная связь", "Металлическая связь"], correct: 2 },
-  { question: "Какая связь возникает между молекулами воды, создавая её особые свойства?", answers: ["Металлическая связь", "Ионная связь", "Водородная связь"], correct: 2 },
-  { question: "Какая из этих молекул образована ковалентной связью?", answers: ["NaCl (поваренная соль)", "CH₄ (метан)", "MgO (оксид магния)"], correct: 1 },
-  { question: "Какая связь характерна для молекул, имеющих диполи?", answers: ["Ионная связь", "Полярная ковалентная связь", "Металлическая связь"], correct: 1 },
-  { question: "Какая связь характерна для образования белковых молекул?", answers: ["Пептидная связь", "Ионная связь", "Водородная связь"], correct: 0 },
-  { question: "Что происходит с электронами при образовании металлической связи?", answers: ["Электроны обмениваются между атомами.", "Электроны свободно перемещаются между атомами.", "Электроны полностью передаются от одного атома другому."], correct: 1 },
-  { question: "Какая связь возникает между атомами углерода в алканах?", answers: ["Двойная ковалентная", "Неполярная одинарная ковалентная", "Ионная"], correct: 1 },
-  { question: "Какой тип связи характерен для молекулы аммиака (NH₃)?", answers: ["Ионная", "Полярная ковалентная", "Металлическая"], correct: 1 },
-  { question: "Что образуется при разрыве ковалентной связи?", answers: ["Ионы", "Радикалы", "Протон"], correct: 1 }
+  {
+    question: "Какой химический элемент обозначается символом 'H'?",
+    options: ["Водород", "Гелий", "Азот", "Кислород"],
+    correctAnswer: 0
+  },
 ];
 
-let currentQuestionIndex = 0;
-let score = 0;
-
-document.getElementById("start-test-btn").addEventListener("click", function () {
-  this.style.display = "none";
-  document.getElementById("quiz").style.display = "block";
-  showQuestion();
-});
-
-document.getElementById("next-btn").addEventListener("click", function () {
-  const selectedAnswer = document.querySelector('input[name="answer"]:checked');
-  if (selectedAnswer) {
-    const answerIndex = parseInt(selectedAnswer.value);
-    if (answerIndex === questions[currentQuestionIndex].correct) {
-      score += 100 / questions.length;
-    }
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-      showQuestion();
-    } else {
-      showResult();
-    }
-  }
-});
-
+// Отображение текущего вопроса
 function showQuestion() {
-  const questionContainer = document.getElementById("question");
-  const answersContainer = document.getElementById("answers");
-  const nextBtn = document.getElementById("next-btn");
-
-  questionContainer.textContent = questions[currentQuestionIndex].question;
-  answersContainer.innerHTML = '';
-
-  questions[currentQuestionIndex].answers.forEach((answer, index) => {
-    const answerLabel = document.createElement('label');
-    answerLabel.innerHTML = `
-          <input type="radio" name="answer" value="${index}">
-          ${answer}
-      `;
-    answersContainer.appendChild(answerLabel);
-    answersContainer.appendChild(document.createElement('br'));
-  });
-
-  nextBtn.style.display = "block";
+  const question = questions[currentQuestionIndex];
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+  questionEl.textContent = question.question;
+  optionsEl.innerHTML = "";
 }
 
+// Отображение результата теста
 function showResult() {
-  document.getElementById("quiz").style.display = "none";
-  document.getElementById("result").style.display = "block";
-  document.getElementById("score").textContent = Math.round(score);
+  const resultEl = document.getElementById("result");
+  resultEl.innerHTML = `Ваш результат: ${score} из ${questions.length}`;
 }

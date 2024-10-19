@@ -466,9 +466,18 @@ canvas {
     filter: brightness(1.2);
   }
 }
+/* --------------------------------------- */
 footer {
   color: #fff;
   background: #4F2567;
+}
+
+.social-media {
+  gap: 10px;
+}
+.social-media li img {
+  border-radius: 50%;
+  width: 50px;
 }
 
 /* ------------------Мобильные устройства-------------------- */
