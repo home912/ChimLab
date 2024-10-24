@@ -78,6 +78,33 @@ body
         grid-template-columns: 1fr 1fr
         grid-template-rows: 1fr 1fr
 
+.underline-one
+    position: relative
+    cursor: pointer
+    text-decoration: none
+
+    &:after
+        content: ""
+        display: block
+        position: absolute
+        right: 0
+        bottom: -3px
+        width: 0
+        height: 2px
+        background-color: #4F2567
+        transition: width 0.5s
+
+    &:hover:after
+        content: ""
+        width: 100%
+        display: block
+        position: absolute
+        left: 0
+        bottom: -3px
+        height: 2px
+        background-color: #4F2567
+        transition: width 0.5s
+
 .btnarrow
     transition: 0.2s
 
@@ -215,7 +242,8 @@ section
         font-size: 100px
         font-weight: 900
     &-slogan
-        font-weight: 400
+        font-size: 20px
+        font-weight: 700
 
 /* ---------------------- */
 .banner-question
@@ -298,6 +326,7 @@ section
         margin-block: 20px
 
 /* ------------------Слайдер с 3D моделями-------------------- */
+
 .slick-slider
     margin: 0 auto
 
@@ -373,6 +402,23 @@ canvas
 .slick-next:hover
     background-color: #4F2567 // Цвет фона при наведении
     color: #fff // Цвет текста при наведении
+
+/* ------------------Карточки-------------------- */
+
+.card
+    &-container
+        display: grid
+        grid-template-columns: 1fr 1fr 1fr 1fr
+        gap: 10px
+    &-item
+        padding: 10px
+        background: #eccaf7c7
+        height: 100%
+        border-radius: 20px
+        box-shadow: inset 3px 3px 10px #ffffff8a
+        transition: 0.2s
+        &:hover
+            scale: 1.3
 
 /* ------------------Анимации-------------------- */
 

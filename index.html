@@ -44,9 +44,9 @@
                 <!-- Основное меню навигации -->
                 <nav class="header-menu">
                     <ul class="header-list flex link-effect">
-                        <li><a class="header-link" href="gallery.html">Связи</a></li>
-                        <li><a class="header-link" href="#models3d">Модели</a></li>
-                        <li><a class="header-link" href="#test-container">Тесты</a></li>
+                        <li><a class="header-link underline-one" href="#connections">Связи</a></li>
+                        <li><a class="header-link underline-one" href="#models3d">Модели</a></li>
+                        <li><a class="header-link underline-one" href="#test-container">Тесты</a></li>
                     </ul>
                 </nav>
             </div>
@@ -83,7 +83,7 @@
         </section>
 
         <!-- Вторая секция с вопросом и ответом -->
-        <section class="banner-question flex flex-ac flex-wr">
+        <section class="banner-question flex flex-ac flex-wr flex-jb">
             <!-- Контейнер с изображением бутылки -->
             <div class="botle-block-wrapper">
                 <div class="botle-block-container">
@@ -123,16 +123,33 @@
             </div>
             <img style="z-index: -10; opacity: 0.5;" class="molecule2" src="img/molecule4.svg" alt="">
         </section>
-        <section>
-            <div class="flex flex-jb flex-ac">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+        <section id="connections">
+            <h1 style="margin-bottom: 20px;">Виды связей</h1>
+            <div class="card-container flex-jb flex-ac">
+                <div class="card-item">
+                    <h2>Ковалентная связь</h1>
+                        <p>Химическая связь, возникающая в результате образования общих электронных пар.</p>
+                </div>
+                <div class="card-item">
+                    <h2>Ионная связь</h2>
+                    <p>Связь, которая возникает между атомами, сильно различающимися по значениям
+                        электроотрицательности.</p>
+                </div>
+                <div class="card-item">
+                    <h2>Металлическая связь</h2>
+                    <p>Связь между положительными ионами металлов и общими электронами, которые свободно движутся по
+                        всему объёму.</p>
+                </div>
+                <div class="card-item">
+                    <h2>Водородная связь</h2>
+                    <p>Связь между электроотрицательным атомом и атомом водорода <b>H</b>, связанным ковалентно с другим
+                        электроотрицательным атомом.</p>
+                </div>
             </div>
         </section>
         <!-- Третья секция с 3D моделями молекул и слайдером -->
         <section id="models3d" class="models3d">
+            <h1>3D Модели</h1>
             <div class="slider">
                 <div class="molecule-slide" id="molecule1-container">
                     <div class="molecule-view"></div>
@@ -182,7 +199,7 @@
         </section>
 
         <!-- Секция с тестом на химические связи -->
-        <section>
+        <section class="test">
             <div id="test-container" class="test-container">
                 <h1 class="test-title">ТЕСТ: Химические связи</h1>
                 <!-- Кнопка для начала теста -->
