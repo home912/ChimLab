@@ -205,22 +205,23 @@
                 <!-- Кнопка для начала теста -->
                 <button id="start-test-btn" class="start-btn">Пройти тест по химическим связям <span
                         class="btnarrow">▶▶</span></button>
+
                 <!-- Контейнер с вопросами теста -->
-                <div id="quiz" class="quiz" style="display: none;">
+                <div id="quiz" class="quiz">
                     <div id="question-container">
                         <h2 id="question"></h2>
                         <div id="answers"></div>
                     </div>
                     <!-- Кнопка для перехода к следующему вопросу -->
-                    <button id="next-btn" class="next-btn" style="display: none;">Следующий вопрос <span
-                            class="btnarrow">▶▶</span></button>
-                </div>
-                <!-- Контейнер с результатом теста -->
-                <div id="result" class="result" style="display: none;">
-                    <h2>Ваш результат: <span id="score"></span>/100</h2>
-                    <button onclick="location.reload()">Пройти тест снова</button>
+                    <button id="next-btn" class="next-btn">Следующий вопрос<span class="btnarrow">▶▶</span></button>
                 </div>
 
+                <!-- Контейнер с результатом теста -->
+                <div id="result" class="result">
+                    <h2>Ваш результат: <span id="score"></span>/100</h2>
+                    <div id="result-details"></div> <!-- Для подробных результатов -->
+                    <button onclick="location.reload()">Пройти тест снова <span class="btnarrow">▶▶</span></button>
+                </div>
             </div>
         </section>
     </main>

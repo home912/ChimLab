@@ -188,13 +188,13 @@ function createBond(startAtom, endAtom, radius, scene) {
   // Получаем позиции начального и конечного атомов
   const startPosition = startAtom.position.clone();
   const endPosition = endAtom.position.clone();
-  
+
   // Вычисляем вектор направления от начального атома к конечному
   const direction = new THREE.Vector3().subVectors(endPosition, startPosition);
-  
+
   // Определяем расстояние между атомами
   const distance = direction.length();
-  
+
   // Нормализуем вектор направления (делаем его единичным)
   direction.normalize();
 
@@ -203,17 +203,17 @@ function createBond(startAtom, endAtom, radius, scene) {
   // `distance` — длина цилиндра, равная расстоянию между атомами
   // `32` — количество сегментов цилиндра для плавности
   const geometry = new THREE.CylinderGeometry(radius, radius, distance, 32);
-  
+
   // Создаем простой материал для связи черного цвета
   const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
-  
+
   // Создаем сетку (mesh) для связи с использованием геометрии и материала
   const bond = new THREE.Mesh(geometry, material);
 
   // Устанавливаем позицию связи между атомами:
   // Перемещаем её в среднюю точку между начальным и конечным атомами
   bond.position.copy(startPosition).add(direction.clone().multiplyScalar(distance / 2));
-  
+
   // Устанавливаем правильную ориентацию связи:
   // Вращаем цилиндр, чтобы он был направлен от одного атома к другому
   // Для этого используем метод `quaternion.setFromUnitVectors`, который преобразует единичный вектор (0, 1, 0) 
@@ -330,7 +330,6 @@ $(document).ready(function () {
 
 
 
-// Определяем массив с вопросами и ответами
 const questions = [
   { question: "Что происходит при образовании ионной связи?", answers: ["Один атом отдает электрон другому.", "Атомы делятся электронами.", "Атомы объединяются в кристаллическую решетку."], correct: 0 },
   { question: "Как называется связь между атомами с одинаковой электроотрицательностью?", answers: ["Полярная ковалентная.", "Неполярная ковалентная.", "Ионная."], correct: 1 },
@@ -351,99 +350,108 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let score = 0;
+let answersLog = [];  // Сохраняет информацию о каждом ответе пользователя
 
-// Добавляем обработчик события "click" на элемент с id "start-test-btn"
+// Функция для показа вопроса с номером
+function showQuestion() {
+  const questionContainer = document.getElementById("question-container");
+  const questionElem = document.getElementById("question");
+  const answersElem = document.getElementById("answers");
+
+  // Очистка предыдущих ответов
+  answersElem.innerHTML = "";
+
+  // Текущий вопрос
+  const currentQuestion = questions[currentQuestionIndex];
+
+  // Отображаем номер вопроса и сам вопрос
+  questionElem.innerText = `Вопрос ${currentQuestionIndex + 1}/${questions.length}: ${currentQuestion.question}`;
+
+  // Отображаем варианты ответов как радиокнопки
+  currentQuestion.answers.forEach((answer, index) => {
+    const label = document.createElement("label");
+    const radio = document.createElement("input");
+
+    radio.type = "radio";
+    radio.name = "answer"; // Все радиокнопки должны иметь одно имя для группировки
+    radio.value = index; // Значение будет индекс ответа
+    radio.classList.add("answer-radio");
+
+    label.appendChild(radio);
+    label.appendChild(document.createTextNode(answer));
+    answersElem.appendChild(label);
+    answersElem.appendChild(document.createElement("br")); // Переход на новую строку
+  });
+
+  // Показать кнопку "Показать результат", если это последний вопрос
+  document.getElementById("next-btn").innerHTML = currentQuestionIndex === questions.length - 1 ? "Показать результат <span class='btnarrow'>▶▶</span>" : "Следующий вопрос <span class='btnarrow'>▶▶</span>";
+  document.getElementById("next-btn").style.display = "block"; // Показываем кнопку
+}
+
+// Обработка выбора ответа
+function selectAnswer() {
+  const currentQuestion = questions[currentQuestionIndex];
+  const selectedRadio = document.querySelector('input[name="answer"]:checked'); // Получаем выбранный элемент
+
+  if (!selectedRadio) return; // Если ничего не выбрано, ничего не делаем
+
+  const selectedAnswer = parseInt(selectedRadio.value); // Получаем значение радиокнопки
+  const isCorrect = selectedAnswer === currentQuestion.correct;
+
+  if (isCorrect) score += 1;
+
+  // Сохранение результата ответа
+  answersLog.push({
+    question: currentQuestion.question,
+    selectedAnswer: currentQuestion.answers[selectedAnswer],
+    correctAnswer: currentQuestion.answers[currentQuestion.correct],
+    isCorrect: isCorrect
+  });
+
+  // Переход к следующему вопросу или к результатам
+  if (currentQuestionIndex < questions.length - 1) {
+    currentQuestionIndex += 1;
+    showQuestion();
+  } else {
+    showResults();
+  }
+}
+
+// Отображение результатов
+function showResults() {
+  const quizElem = document.getElementById("quiz");
+  const resultElem = document.getElementById("result");
+  const scoreElem = document.getElementById("score");
+  const resultDetails = document.createElement("div");
+
+  // Скрываем тест и показываем результаты
+  quizElem.style.display = "none";
+  resultElem.style.display = "block";
+
+  // Подсчет баллов
+  scoreElem.innerText = Math.round((score / questions.length) * 100);
+
+  // Отображение каждого вопроса с правильными и неправильными ответами
+  answersLog.forEach((log, index) => {
+    const questionResult = document.createElement("p");
+    const symbol = log.isCorrect ? "✔️" : "❌";
+    questionResult.innerHTML = `<strong>${index + 1}. ${log.question}</strong><br>
+          Ваш ответ: ${log.selectedAnswer} ${symbol}<br>
+          Правильный ответ: ${log.correctAnswer}`;
+    resultDetails.appendChild(questionResult);
+  });
+  resultElem.appendChild(resultDetails);
+}
+
+// Обработчик для кнопки "Начать тест"
 document.getElementById("start-test-btn").addEventListener("click", function () {
-  
-  // Когда кнопка нажата, скрываем саму кнопку
   this.style.display = "none";
-  
-  // Отображаем элемент с id "quiz" (например, блок с вопросами)
   document.getElementById("quiz").style.display = "block";
-  
-  // Вызываем функцию, которая покажет первый вопрос викторины
   showQuestion();
 });
 
-// Добавляем обработчик события "click" на элемент с id "next-btn"
-document.getElementById("next-btn").addEventListener("click", function () {
-
-  // Ищем выбранный пользователем ответ (чекбокс или радиокнопку) среди всех элементов с именем "answer"
-  const selectedAnswer = document.querySelector('input[name="answer"]:checked');
-
-  // Проверяем, что пользователь действительно выбрал какой-то вариант ответа
-  if (selectedAnswer) {
-    
-    // Получаем значение выбранного ответа и конвертируем его в число (индекс ответа)
-    const answerIndex = parseInt(selectedAnswer.value);
-    
-    // Проверяем, правильный ли ответ был выбран
-    if (answerIndex === questions[currentQuestionIndex].correct) {
-      // Если ответ правильный, добавляем к общему баллу очки (рассчитываем их как 100 деленное на количество вопросов)
-      score += 100 / questions.length;
-    }
-
-    // Переходим к следующему вопросу, увеличивая индекс текущего вопроса
-    currentQuestionIndex++;
-
-    // Проверяем, остались ли еще вопросы
-    if (currentQuestionIndex < questions.length) {
-      // Если есть еще вопросы, показываем следующий вопрос
-      showQuestion();
-    } else {
-      // Если вопросов больше нет, отображаем результаты теста
-      showResult();
-    }
-  }
-});
+// Обновите обработчик для кнопки "Следующий вопрос"
+document.getElementById("next-btn").addEventListener("click", selectAnswer);
 
 
-function showQuestion() {
-  // Получаем контейнер для отображения вопроса
-  const questionContainer = document.getElementById("question");
-  
-  // Получаем контейнер для отображения вариантов ответа
-  const answersContainer = document.getElementById("answers");
 
-  // Получаем кнопку "Следующий вопрос"
-  const nextBtn = document.getElementById("next-btn");
-
-  // Отображаем текст текущего вопроса из массива вопросов
-  questionContainer.textContent = questions[currentQuestionIndex].question;
-
-  // Очищаем контейнер с ответами перед добавлением новых вариантов
-  answersContainer.innerHTML = '';
-
-  // Проходимся по каждому ответу текущего вопроса
-  questions[currentQuestionIndex].answers.forEach((answer, index) => {
-    // Создаем элемент <label> для каждого варианта ответа
-    const answerLabel = document.createElement('label');
-    
-    // Устанавливаем HTML для метки с радиокнопкой и текстом ответа
-    answerLabel.innerHTML = `
-          <input type="radio" name="answer" value="${index}">
-          ${answer}
-      `;
-    
-    // Добавляем метку с радиокнопкой в контейнер с ответами
-    answersContainer.appendChild(answerLabel);
-    
-    // Добавляем разрыв строки после каждого варианта ответа
-    answersContainer.appendChild(document.createElement('br'));
-  });
-
-  // Показываем кнопку "Следующий вопрос"
-  nextBtn.style.display = "block";
-}
-
-
-function showResult() {
-  // Скрываем блок с викториной
-  document.getElementById("quiz").style.display = "none";
-  
-  // Показываем блок с результатами
-  document.getElementById("result").style.display = "block";
-  
-  // Отображаем итоговый балл, округленный до ближайшего целого числа
-  document.getElementById("score").textContent = Math.round(score);
-}
