@@ -25,6 +25,9 @@
     <!-- Подключение пользовательского стиля -->
     <link rel="stylesheet" href="css/style.css">
 
+    <!-- Подключение гистограммы -->
+    <script src="https://www.google.com/jsapi"></script>
+
     <title>ХимЛаб | самый полезный экскурс по химическим связям</title>
 </head>
 
@@ -262,6 +265,13 @@
                 </form>
             </div>
         </section>
+
+        <section>
+            <h1 style="margin-bottom: 20px">Анализ посетителей</h1>
+            <div class="flex flex-jc">
+                <div id="views" class="gistogramma"></div>
+            </div>
+        </section>
     </main>
 
     <!-- Футер с контактами и информацией об авторе -->
@@ -285,7 +295,7 @@
             <div class="flex flex-d-col">
                 <h2>Автор</h2>
                 <ul>
-                    <li>Мария 2024 г. &copy;</li>
+                    <li>Калитина Мария Михайловна 2024 г. &copy;</li>
                 </ul>
             </div>
             <div class="flex flex-d-col">
@@ -306,6 +316,8 @@
     <!-- Подключение библиотеки для слайдера Slick -->
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+
 
     <!-- Подключение пользовательских скриптов -->
     <script src="js/script.js"></script>

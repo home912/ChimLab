@@ -453,5 +453,22 @@ document.getElementById("start-test-btn").addEventListener("click", function () 
 // Обновите обработчик для кнопки "Следующий вопрос"
 document.getElementById("next-btn").addEventListener("click", selectAnswer);
 
+google.load("visualization", "1", { packages: ["corechart"] });
+google.setOnLoadCallback(drawChart);
 
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Возраст', 'Мужчины', 'Женщины'],
+    ['< 18', 21, 40],
+    ['18-35', 59, 75],
+    ['35 >', 29, 11]
+  ]);
+  var options = {
+    title: 'По возрасту',
+    hAxis: { title: 'Возраст' },
+    vAxis: { title: 'Количество людей' }
+  };
+  var chart = new google.visualization.ColumnChart(document.getElementById('views'));
+  chart.draw(data, options);
+}
 
